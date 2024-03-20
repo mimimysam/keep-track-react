@@ -1,12 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Synonymns from "./Synonyms";
 
 export default function Word() {
   const [word, setWord] = useState("");
   const [synonyms, setSynonyms] = useState([]);
 
-  const handleClick = () => {
+  useEffect(() => {
+    fetchSynonyms(word);
+  }, [word]);
+
+  const handleSubmitBottonClick = () => {
     console.log(word);
+    fetchSynonyms(word);
+    // setWord("");
+  };
+
+  const handleWordClick = (e: any) => {
+    console.log("child word: ", e.target.value);
+    let selected = e.target.value;
+    setWord(selected);
+    // fetchSynonyms(selected);
+  };
+
+  function fetchSynonyms(word: string) {
     let synonyms = null;
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
       .then((res) => res.json())
@@ -16,17 +32,17 @@ export default function Word() {
         setSynonyms(synonyms);
       })
       .catch((error) => console.error(error));
-    // setWord("");
-  };
+  }
 
   return (
     <div>
       <h2>Enter a word to get its synonyms.</h2>
       <input value={word} onChange={(e) => setWord(e.target.value)} />
-      <button onClick={handleClick} disabled={!word}>
+      <button onClick={handleSubmitBottonClick} disabled={!word}>
         Submit
       </button>
-      <Synonymns synonyms={synonyms} />
+      <div style={{ height: "20px" }}></div>
+      <Synonymns synonyms={synonyms} handleWordClick={handleWordClick} />
       {/* <ul>
         {synonyms.map((synonym) => (
           <li>{synonym}</li>
