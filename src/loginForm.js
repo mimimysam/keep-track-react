@@ -64,6 +64,11 @@ export default function LoginForm() {
       <div className="loginButton">
         <button disabled={buttonDisabled} onClick={handleLogin}>Login</button>
       </div>
+      <Child email={email} />
     </div>
   );
+}
+
+const Child = ({email}) => {
+  return <h1>I am a child, {email}!</h1>
 }
