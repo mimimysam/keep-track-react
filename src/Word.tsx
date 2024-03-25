@@ -1,25 +1,30 @@
 import { useState, useEffect } from "react";
 import Synonymns from "./Synonyms";
+import { setTimeout } from "timers/promises";
 
 export default function Word() {
   const [word, setWord] = useState("");
   const [synonyms, setSynonyms] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchSynonyms(word);
-  }, [word]);
+  // useEffect(() => {
+  //   fetchSynonyms(word);
+  // }, [word]);
 
   const handleSubmitBottonClick = () => {
     console.log(word);
+    setLoading(true);
     fetchSynonyms(word);
-    // setWord("");
+    setLoading(false);
   };
 
   const handleWordClick = (e: any) => {
     console.log("child word: ", e.target.value);
+    setLoading(true);
     let selected = e.target.value;
     setWord(selected);
-    // fetchSynonyms(selected);
+    fetchSynonyms(selected);
+    setLoading(false);
   };
 
   function fetchSynonyms(word: string) {
@@ -32,6 +37,7 @@ export default function Word() {
         setSynonyms(synonyms);
       })
       .catch((error) => console.error(error));
+    setLoading(false);
   }
 
   return (
@@ -42,7 +48,11 @@ export default function Word() {
         Submit
       </button>
       <div style={{ height: "20px" }}></div>
-      <Synonymns synonyms={synonyms} handleWordClick={handleWordClick} />
+      <Synonymns
+        synonyms={synonyms}
+        handleWordClick={handleWordClick}
+        loading={loading}
+      />
       {/* <ul>
         {synonyms.map((synonym) => (
           <li>{synonym}</li>

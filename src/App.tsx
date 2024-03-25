@@ -9,8 +9,8 @@ function App() {
     <div className="container">
       {/* <ProjectsPage /> */}
       {/* <Hello name="Mimi" enthusiasmLevel={3}></Hello> */}
-      <LoginForm />
-      {/* <Word /> */}
+      {/* <LoginForm /> */}
+      <Word />
     </div>
   );
 }

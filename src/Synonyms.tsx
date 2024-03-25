@@ -1,9 +1,11 @@
 export default function Synonymns({
   synonyms,
   handleWordClick,
+  loading,
 }: {
   synonyms: any;
   handleWordClick: any;
+  loading: boolean;
 }) {
   // let synonyms = props.synonyms;
   console.log("synonyms child: ", synonyms);
@@ -11,14 +13,17 @@ export default function Synonymns({
   return (
     <div style={{ border: "solid", color: "blue" }}>
       <p>list of synonyms here...</p>
-
-      <div style={{ marginBottom: "20px" }}>
-        {synonyms.map((synonym: string, idx: number) => (
-          <button key={idx} value={synonym} onClick={handleWordClick}>
-            {synonym}
-          </button>
-        ))}
-      </div>
+      {!loading ? (
+        <div style={{ marginBottom: "20px" }}>
+          {synonyms.map((synonym: string, idx: number) => (
+            <button key={idx} value={synonym} onClick={handleWordClick}>
+              {synonym}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <span>Loading...</span>
+      )}
 
       {/* <ul>
         {synonyms.map((synonym: string, idx: number) => (
